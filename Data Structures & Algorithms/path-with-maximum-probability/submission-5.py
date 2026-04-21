@@ -1,0 +1,27 @@
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start_node: int, end_node: int) -> float:
+        adj = {}
+        for i in range(n):
+            adj[i]= []
+        for i in range(len(edges)):
+            adj[edges[i][0]].append((edges[i][1],succProb[i]))
+            adj[edges[i][1]].append((edges[i][0],succProb[i]))
+      
+        maxHeap = []
+        distance = {}
+
+        heapq.heappush(maxHeap,(1,start_node))
+
+        while maxHeap:
+            w1,u = heapq.heappop(maxHeap)
+            w1=abs(w1)
+            if u in distance:
+                continue
+            distance[u] = w1
+            for v,w2 in adj[u]:
+                if v not in distance:
+                    heapq.heappush(maxHeap,(-w1*w2,v))
+            
+        if end_node not in distance:
+            return 0
+        return distance[end_node]

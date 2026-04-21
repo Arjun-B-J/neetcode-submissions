@@ -1,0 +1,26 @@
+#evaluate reverse polish notation
+#careful with the ordering
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+        for c in tokens:
+            print(c,stack)
+            if c== "+":
+                b=stack.pop()
+                a=stack.pop()
+                stack.append(a+b)
+            elif c== "-":
+                b=stack.pop()
+                a=stack.pop()
+                stack.append(a-b)
+            elif c== "*":
+                b=stack.pop()
+                a=stack.pop()
+                stack.append(a*b)
+            elif c== "/":
+                b=stack.pop()
+                a=stack.pop()
+                stack.append(int(a/b))
+            else:
+                stack.append(int(c))
+        return stack[0]
